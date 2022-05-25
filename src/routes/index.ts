@@ -1,5 +1,7 @@
-import tempRoute from "./temp.route"
+import accountRoute from './account.route';
+import jobsRoute from './jobs.route';
 
 export default function initRoute(app: any) {
-  app.use("/", tempRoute);
+  app.use('/', accountRoute);
+  app.use('/jobs', jobsRoute);
 }
