@@ -1,7 +1,7 @@
 import authConfig from '../configs/auth.config';
 import { sign } from 'jsonwebtoken';
 
-export function createJWTToken(username: string) {
+export const createJWTToken = (username: string) => {
   try {
     if (!authConfig.token_secret) {
       throw Error('Secret not provided!');
@@ -14,4 +14,4 @@ export function createJWTToken(username: string) {
   } catch (err: any) {
     throw err;
   }
-}
+};
