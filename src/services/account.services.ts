@@ -18,7 +18,7 @@ export const createAccount = async (input: registerInput) => {
     let hash: string = await bcrypt.hash(password, salt);
     password = hash;
 
-    let checkResult = findOneAccountByUsername(username);
+    let checkResult = await findOneAccountByUsername(username);
     if (checkResult != null) {
       log.error('Username already exist');
       return false;

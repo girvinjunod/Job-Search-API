@@ -12,7 +12,17 @@ export const getJobData = async () => {
   }
 };
 
-export const getJobDetail = async (id: string) => {};
+export const getJobByID = async (id: string) => {
+  let resp = await getJobData();
+  let data = resp.data;
+
+  let response = data.find((item: jobData) => item.id == id);
+  if (response) {
+    return response;
+  } else {
+    return false;
+  }
+};
 
 export const searchJob = async (query: jobQuery) => {
   let limitPerPage = 10;

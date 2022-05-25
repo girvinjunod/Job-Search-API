@@ -10,7 +10,7 @@ const register: RequestHandler = async (req: Request, res: Response) => {
   let result = await createAccount(req.body);
 
   if (result) {
-    res.status(200).send({ msg: 'Account created' });
+    res.status(200).send({ err: false, msg: 'Account created' });
   } else {
     res.status(400).send({ err: true, msg: 'Username already exist' });
   }

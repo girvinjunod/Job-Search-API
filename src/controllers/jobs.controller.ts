@@ -1,6 +1,6 @@
 import { RequestHandler, Request, Response } from 'express';
 import log from '../utils/logger';
-import { searchJob } from '../services/jobs.services';
+import { searchJob, getJobByID } from '../services/jobs.services';
 
 const getJobList: RequestHandler = async (req: Request, res: Response) => {
   log.info('get Job List');
@@ -22,15 +22,30 @@ const getJobList: RequestHandler = async (req: Request, res: Response) => {
   //   log.info(query);
 
   let result = await searchJob(query);
-
-  res.status(200).send({ err: false, data: result, msg: 'Success' });
+  if (result) {
+    res.status(200).send({ err: false, data: result, msg: 'Success' });
+  } else {
+    res.status(404).send({ err: true, msg: 'Job Not Found' });
+  }
   return;
 };
 
 const getJobDetail: RequestHandler = async (req: Request, res: Response) => {
   log.info('get Job Detail');
+  let id = <string>req.params.id;
+  //   log.info(id);
+  if (!id || id == ' ') {
+    res.status(400).send({ err: true, msg: 'id is empty' });
+    return;
+  }
 
-  res.status(400).send({ err: true, msg: 'Bad request' });
+  let resp = await getJobByID(id);
+  if (resp) {
+    res.status(200).send({ data: resp, err: false });
+  } else {
+    res.status(404).send({ err: true, msg: 'Job Not Found' });
+  }
+  return;
 };
 
 const jobs = { getJobList, getJobDetail };
